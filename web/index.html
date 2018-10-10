@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        /*g.type-TK > rect {*/
+        /*fill: #00ffd0;*/
+        /*}*/
+
+        .font span{
+            font-size: 40px;
+        }
+
+        .margin{
+            margin-left: 120px;
+        }
+
+        /*#mytext {*/
+        /*font-weight: 800;*/
+        /*!*font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;*!*/
+        /*font-size: 14px;*/
+        /*}*/
+
+        text {
+            font: 11px sans-serif;
+            pointer-events: none;
+            font-weight: 800;
+            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+        }
+
+        .node rect {
+            stroke: #999;
+            fill: #fff;
+            stroke-width: 1.5px;
+        }
+
+        .edgePath path {
+            stroke: #333;
+            stroke-width: 1.5px;
+        }
+
+        .link {
+            fill: none;
+            stroke: #666;
+            stroke-width: 1.5px;
+        }
+
+        #licensing {
+            fill: green;
+        }
+
+        .link.licensing {
+            stroke: green;
+        }
+
+        .link.resolved {
+            stroke-dasharray: 0,2,1;
+        }
+
+        .mydiv{
+            /*border:2px black solid;*/
+            /*width:200px;*/
+            /*height:400px;*/
+            float:left;
+        }
+
+    </style>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-latest.js"></script>
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/dagre-d3.min.js"></script>
+    <title>Force v4</title>
+</head>
+<body>
+<div class="font" >
+    <span>主流程图:</span>
+    <span class="margin">交叉关系图:</span>
+    <input type="text" name="searchName" id="searchValue">
+    <input type="button" value="搜索" align="right" id="searchBtn">
+    <input type="button" value="清空" id="clearBtn">
+</div>
+<br>
+<div id="mytext" class="mydiv" >
+    <svg width=160 height=600 style="font-size: 14px;font-weight: 800"></svg>
+</div>
+<div id="newtext" class="mydiv"><script src="js/force.js"></script></div>
+</body>
+<script src="js/main.js"></script>
+</html>

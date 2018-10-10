@@ -1,0 +1,39 @@
+{"name":"成品包装",
+"children":[
+  {"name":"成品包装",
+  "children":[
+    {"name":"包装ODS","type":"MES",
+    "children":[
+      {"name":"SNP"},
+      {"name":"纸箱型号"},
+      {"name":"夹当"},
+      {"name":"塑料袋尺寸"},
+      {"name":"垫板"},
+      {"name":"大珍珠棉"},
+      {"name":"衬板"},
+      {"name":"小珍珠棉"},
+      {"name":"适用品料号"},
+      {"name":"YFJC号"},
+      {"name":"步骤"},
+      {"name":"关注"},
+      {"name":"签核"}
+    ]},
+    {"name":"成品包装协议","type":"TMS",
+    "children":[
+      {"name":"供应商名称Supplier"},
+      {"name":"供应商邓氏编码Supplier"},
+      {"name":"DUNS#供应商联系人Pkg"},
+      {"name":"联系电话Tel"},
+      {"name":"No.序号"},
+      {"name":"ID零件号"},
+      {"name":"P/N零件名称"},
+      {"name":"Part Description包装形式"},
+      {"name":"Container Type包装编号ontainer"},
+      {"name":"NO.包装箱外尺寸(mm)Container Outside Dimensions"},
+      {"name":"包装数量Quantity of Parts"},
+      {"name":"小包装数量Small Pack"},
+      {"name":"Qty.零件质量（kg）Loaded Weight (kg - full)"},
+      {"name":"单车用量Num"}
+    ]}
+  ]}
+]}

@@ -1,0 +1,63 @@
+{"name":"成品审核",
+"children":[
+  {"name":"成品审核",
+  "children":[
+    {"name":"成品审核工作表","type":"MES",
+      "children":[
+        {"name":"零件名称"},
+        {"name":"零件号"},
+        {"name":"外观"},
+        {"name":"软硬度"},
+        {"name":"日期章"},
+        {"name":"气囊等"},
+        {"name":"车型"},
+        {"name":"零件名称"},
+        {"name":"产品包装"},
+        {"name":"外观等"}
+      ]}
+  ]},
+  {"name":"产品审核",
+  "children":[
+    {"name":"年度产品审核及型式实验计划","type":"TMS",
+      "children":[
+        {"name":"项目名称"},
+        {"name":"内容"},
+        {"name":"计划"},
+        {"name":"实际"},
+        {"name":"一季度"},
+        {"name":"Jan."},
+        {"name":"Feb."},
+        {"name":"Mar"},
+        {"name":"二季度"},
+        {"name":"Apr"},
+        {"name":"May"},
+        {"name":"Jun"},
+        {"name":"三季度"},
+        {"name":"Jul"},
+        {"name":"Aug"},
+        {"name":"Sep"},
+        {"name":"四季度"},
+        {"name":"Oct"},
+        {"name":"Nov"},
+        {"name":"Dec"},
+        {"name":"计划时间"},
+        {"name":"实际完成时间"},
+        {"name":"状态说明："}
+      ]},
+    {"name":"产品审核表及报告","type":"",
+      "children":[
+        {"name":"日期/班次"},
+        {"name":"箱数&料架数"},
+        {"name":"末道检验"},
+        {"name":"YFJC零件号: "},
+        {"name":"车型："},
+        {"name":" 零件名称:"},
+        {"name":"受检特性"},
+        {"name":"审核方法"},
+        {"name":"属性值"},
+        {"name":"审核结果"},
+        {"name":"属性值为“R”时"},
+        {"name":"检验者"}
+      ]}
+  ]}
+]}
