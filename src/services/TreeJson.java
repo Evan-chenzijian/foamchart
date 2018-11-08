@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TreeJson extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -42,12 +43,19 @@ public class TreeJson extends HttpServlet {
             List secList = QueryList.getList(getSec);
             for(int i= 0; i<secList.size();i++){
                 secondOb.put("name",secList.get(i));
-                String getThird = "select distinct thirdLv from tree_data where secondLv='"+secList.get(i)+"'";
-                List thirdList = new ArrayList();
-                thirdList = QueryList.getList(getThird);
+                //这里还需要查询出type
+                String getThird = "select distinct thirdLv,type from tree_data where secondLv='"+secList.get(i)+"'";
+                //要定义为Map类型的list,这样才能用map.get(i).get(key)方法取值
+                List<Map<String, Object>> thirdList = new ArrayList<Map<String,Object>>();
+                //这里的查询返回的是map类型的list和别的不同
+                thirdList = NewQuery.getList(getThird);
                 for(int j=0; j<thirdList.size();j++){
-                    thirdOb.put("name",thirdList.get(j));
-                    String getLast = "select distinct lastLv from tree_data where thirdLv='"+thirdList.get(j)+"'and secondLv='"+secList.get(i)+"'";
+                    //把值分开
+                    String thirdName = thirdList.get(j).get("thirdLv").toString();
+                    String thirdType = thirdList.get(j).get("type").toString();
+                    thirdOb.put("name",thirdName);
+                    thirdOb.put("type",thirdType);
+                    String getLast = "select distinct lastLv from tree_data where thirdLv='"+thirdName+"'and secondLv='"+secList.get(i)+"'";
                     List lastList = new ArrayList();
                     lastList = QueryList.getList(getLast);
 //                    System.out.println(lastList);

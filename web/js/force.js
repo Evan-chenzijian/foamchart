@@ -1,8 +1,9 @@
 //定义读取json的URL
 var myURL = "http://localhost:8080/getJson";
 //直接读取网页上的数据
-d3.json(myURL, function(data) {
-        // console.log(data);
+d3.json(myURL, function(error,data) {
+    if (error) throw error;
+    // console.log(data);
 
     //start
     var	links = data;
@@ -44,13 +45,15 @@ d3.json(myURL, function(data) {
 
     force.start();
 
-    var svg = d3.select("body").append("svg")
-        .attr("width", 1640)
-        .attr("height", height);
+    // var svg = d3.select("body").select("new").append("svg")
+    //     .attr("width", 1640)
+    //     .attr("height", height);
+    // 选中定义好的SVG且不赋予属性
+    var svg = d3.select("body").select("#force");
 
 // Per-type markers, as they don't inherit styles.
     svg.append("defs").selectAll("marker")
-        .data(["suit", "licensing", "resolved"])
+        .data(["suit", "main", "resolved"])
         .enter().append("marker")
         .attr("id", function(d) { return d; })
         .attr("viewBox", "0 -5 10 10")
@@ -71,64 +74,7 @@ d3.json(myURL, function(data) {
     var circle = svg.append("g").selectAll("circle")
         .data(force.nodes())
         .enter().append("circle")
-        .attr("r", function (d) {
-            switch(d.name){
-                case "客户需求":
-                    return 10;
-                case "来料接收":
-                    return 10;
-                case "来料检验":
-                    return 10;
-                case "来料存储":
-                    return 10;
-                case "化工料配置":
-                    return 10;
-                case "化工料抽料":
-                    return 10;
-                case "日料罐储存":
-                    return 10;
-                case "生产准备":
-                    return 10;
-                case "清模":
-                    return 10;
-                case "喷脱模剂":
-                    return 10;
-                case "外协件放置":
-                    return 10;
-                case "浇注":
-                    return 10;
-                case "熟化":
-                    return 10;
-                case "起模":
-                    return 10;
-                case "开孔":
-                    return 10;
-                case "首检":
-                    return 10;
-                case "后道处理":
-                    return 10;
-                case "过程检查":
-                    return 10;
-                case "上悬挂链料架车摆放":
-                    return 10;
-                case "后熟化":
-                    return 10;
-                case "终检":
-                    return 10;
-                case "产品特性检查":
-                    return 10;
-                case "成品包装":
-                    return 10;
-                case "成品审核":
-                    return 10;
-                case "成品储存":
-                    return 10;
-                case "发运":
-                    return 10;
-                default:
-                    return 6;
-            }
-        })
+        .attr("r",6)
         // .call(dragBehavior)
         .on("click",function(d){
             //隐藏其它连线上文字
@@ -150,7 +96,7 @@ d3.json(myURL, function(data) {
                 }else{
                     return 0.2;
                 }
-            })
+            });
             //其他连先亮度调低
             path.style("opacity",function(edge){
                 if( edge.source === d || edge.target === d ){
@@ -159,7 +105,7 @@ d3.json(myURL, function(data) {
                 if( edge.source !== d && edge.target !== d ){
                     return 0.2;
                 }
-            })
+            });
             //其他节点文字亮度调低
             text.style("opacity",function(edge){
                 var v = d.name;
@@ -184,65 +130,7 @@ d3.json(myURL, function(data) {
         .call(force.drag);
     circle.style("stroke","#333")
         .style("stroke-width",1.5)
-        .style("fill",function (d) {
-                switch(d.name){
-                    case "来料接收":
-                        return "#FF0000";
-                    case "来料检验":
-                        return "#FF0000";
-                    case "来料存储":
-                        return "#FF0000";
-                    case "化工料配置":
-                        return "#FF0000";
-                    case "化工料抽料":
-                        return "#FF0000";
-                    case "日料罐储存":
-                        return "#FF0000";
-                    case "生产准备":
-                        return "#FF0000";
-                    case "清模":
-                        return "#FF0000";
-                    case "喷脱模剂":
-                        return "#FF0000";
-                    case "外协件放置":
-                        return "#FF0000";
-                    case "浇注":
-                        return "#FF0000";
-                    case "熟化":
-                        return "#FF0000";
-                    case "起模":
-                        return "#FF0000";
-                    case "开孔":
-                        return "#FF0000";
-                    case "首检":
-                        return "#FF0000";
-                    case "后道处理":
-                        return "#FF0000";
-                    case "过程检查":
-                        return "#FF0000";
-                    case "上悬挂链料架车摆放":
-                        return "#FF0000";
-                    case "后熟化":
-                        return "#FF0000";
-                    case "终检":
-                        return "#FF0000";
-                    case "产品特性检查":
-                        return "#FF0000";
-                    case "成品包装":
-                        return "#FF0000";
-                    case "成品审核":
-                        return "#FF0000";
-                    case "成品储存":
-                        return "#FF0000";
-                    case "发运":
-                        return "#FF0000";
-                    case "客户需求":
-                        return "#FF0000";
-                    default:
-                        return "#ccc";
-                }
-            }
-        );
+        .style("fill",'#ccc');
 
     var text = svg.append("g").selectAll("text")
         .data(force.nodes())
@@ -272,10 +160,11 @@ d3.json(myURL, function(data) {
     function dragstart(d) {
         d3.select(this).classed(d.fixed = true);
     }
-
     function dblclick(d) {
-            var name = d.name;
-            window.open('Tree.jsp?name='+name);//open a new page and send the param name as title
+        // if (d.name==="根节点A"){
+        var name = d.name;
+        window.open('Tree.jsp?name='+name);//open a new page and send the param name as title
+        // }
     }
 //end
 
@@ -296,7 +185,7 @@ d3.json(myURL, function(data) {
             }else{
                 return 0.2;
             }
-        });
+        })
         path.style("opacity",function(d){
             // console.log(d);
             if( d.source.name === dName || d.target.name===dName){
@@ -304,7 +193,7 @@ d3.json(myURL, function(data) {
             }else{
                 return 0.2;
             }
-        });
+        })
         text.style("opacity",function(edge){
             if( edge.name === dName || (edge[dName] !== undefined &&  edge[dName].name === dName)){
                 return 1;
@@ -312,17 +201,27 @@ d3.json(myURL, function(data) {
                 return 0.2;
             }
         })
+        // nodes.forEach(function(edge){
+        //     if( edge.name === dName || (edge[dName] !== undefined &&  edge[dName].name === dName)){
+        //         //其它节点亮度调低
+        //         circle.style("opacity",0.2)
+        //         //其他连先亮度调低
+        //         path.style("opacity",0.2)
+        //         //其他节点文字亮度调低
+        //         text.style("opacity",0.2)
+        //     }
+        // })
     });
 
     //clear
     $("#clearBtn").click(function(){
             // alert("postive!")
-        $("#searchValue").val("");
-                text.style("fill-opacity",1);
-                path.style("opacity",1);
-                circle.style("opacity",1);
-                text.style("opacity",1);
-    }
+            $("#searchValue").val("");
+            text.style("fill-opacity",1);
+            path.style("opacity",1);
+            circle.style("opacity",1);
+            text.style("opacity",1);
+        }
     )
 });
 

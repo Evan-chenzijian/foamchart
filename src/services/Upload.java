@@ -3,7 +3,6 @@ package services;
 import com.jspsmart.upload.SmartUpload;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +30,7 @@ public class Upload extends HttpServlet {
         //总文件大小限制
         smartUpload.setTotalMaxFileSize(1024*1024*50);
         //类型白名单
-        smartUpload.setAllowedFilesList("pdf,txt,xls");
+        smartUpload.setAllowedFilesList("PDF,pdf,txt,xls");
         try {
             //黑名单
             smartUpload.setDeniedFilesList("exe,rar");

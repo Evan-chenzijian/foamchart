@@ -15,8 +15,15 @@
 %>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href=" <%=basePath%>">
+    <title>树状图</title>
+    <!-- Bootstrap -->
+    <link href="js/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <style>
 
     .node {
@@ -38,33 +45,42 @@
         fill: none;
         stroke: #ccc;
         stroke-width: 1.5px;
-    }
-
-</style>
+    }</style>
 <body>
-<script src="js/d3.v3.min.js"></script>
-<script src="js/jquery-latest.js"></script>
-<script src="js/jquery-form.js"></script>
-<h1>树状图:</h1>
-<!--<button id="update">修改</button>-->
-<form action="TreeJson" id="treeForm">
-    <input type="text" name="treeName" id="treeName">
-    <button type="button" onclick="toSubmit()">显示</button>
-</form>
-<hr>
-<div>
-    <P>图例说明:</P>
-    <ul>
-        <li style="color:#CD0000;float:left">MES</li>
-        <li style="color:#F0E68C;float:left;margin-left:30px">SAP</li>
-        <LI style="color:#FF7F50;float:left;margin-left:30px">TMS</LI>
-        <LI style="color:#9932CC;float:left;margin-left:30px">AMP</LI>
-        <LI style="color:#00EE00;float:left;margin-left:30px">WMS</LI>
-        <li style="color:#8B7500;float:left;margin-left:30px">WMS&SAP</li>
-        <li style="color:#607B8B;float:left;margin-left:30px">maximo</li>
-    </ul>
+<div class="container" style="margin-top: 10px">
+    <div class="row">
+        <span class="col-md-2 col-lg-2" style="font-size: 25px;font-weight: 800">树状图:</span>
+        <form action="TreeJson" id="treeForm" class="col-md-4 col-lg-4">
+            <input type="text" name="treeName" id="treeName" style="margin-top: 6px">
+            <button type="button" onclick="toSubmit()">显示</button>
+        </form>
+    </div>
 </div>
-<div id="newTree">
+<hr>
+<div class="container">
+    <div class="row">
+        <P class="col-md-1 col-lg-1">图例说明:</P>
+        <ul class="col-md-6 col-lg-6">
+            <li style="color:#CD0000;float:left">MES</li>
+            <li style="color:#F0E68C;float:left;margin-left:30px">SAP</li>
+            <LI style="color:#FF7F50;float:left;margin-left:30px">TMS</LI>
+            <LI style="color:#9932CC;float:left;margin-left:30px">AMP</LI>
+            <LI style="color:#00EE00;float:left;margin-left:30px">WMS</LI>
+            <li style="color:#8B7500;float:left;margin-left:30px">WMS&SAP</li>
+            <li style="color:#607B8B;float:left;margin-left:30px">maximo</li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div id="newTree"></div>
+    </div>
+</div>
+    <script src="js/jquery.js"></script>
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/jquery-latest.js"></script>
+    <script src="js/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="js/jquery-form.js"></script>
 <script>
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 960 - margin.right - margin.left,
