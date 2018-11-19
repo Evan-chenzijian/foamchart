@@ -82,7 +82,7 @@ public class TreeJson extends HttpServlet {
 //                System.out.println(firstArr);
             }
             firstOb.put("children",firstArr);
-            System.out.println(firstOb);
+//            System.out.println(firstOb);
 
             out = response.getWriter();
             out.println(firstOb);

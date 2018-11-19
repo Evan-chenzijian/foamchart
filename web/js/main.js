@@ -3,7 +3,7 @@ var g = new dagreD3.graphlib.Graph()
     .setDefaultEdgeLabel(function() { return {}; });
 // 获取网页数据
 $.getJSON('http://localhost:8080/MainJson',function(data){
-    console.log(data);
+    // console.log(data);
     //循环赋值
     for(var i = 0;i<data.length;i++){
         //悲剧,label命名冲突了

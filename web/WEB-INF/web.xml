@@ -52,4 +52,15 @@
         <servlet-name>Upload</servlet-name>
         <url-pattern>/Upload</url-pattern>
     </servlet-mapping>
+
+    <!--处理链接转编号-->
+    <servlet>
+        <servlet-name>getLink</servlet-name>
+        <servlet-class>services.getLink</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>getLink</servlet-name>
+        <url-pattern>/getLink</url-pattern>
+    </servlet-mapping>
 </web-app>

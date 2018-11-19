@@ -53,7 +53,7 @@ d3.json(myURL, function(error,data) {
 
 // Per-type markers, as they don't inherit styles.
     svg.append("defs").selectAll("marker")
-        .data(["suit", "main", "resolved"])
+        .data(["suit", "main", "resolved","equal"])
         .enter().append("marker")
         .attr("id", function(d) { return d; })
         .attr("viewBox", "0 -5 10 10")

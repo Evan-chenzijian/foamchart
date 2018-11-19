@@ -11,7 +11,7 @@
     // 获得项目完全路径（假设你的项目叫MyApp，那么获得到的地址就是http://localhost:8080/MyApp/）:
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
-    response.setCharacterEncoding("GBK");
+//    response.setCharacterEncoding("GBK");
 %>
 <html>
 <head>
@@ -120,7 +120,7 @@
     Request = GetRequest();
     var dataName;
     dataName = Request["name"];
-    console.log(dataName);
+    // console.log(dataName);
     $("#treeName").val(dataName);
 
     // d3.json(dataName+".json", function(error, flare) {
@@ -280,19 +280,32 @@
                 function dblclick(d) {
                     //获取节点名称
                     var dname = d.name;
-                    //定义请求地址
-                    var pdfUrl = "PDF/"+dname+".pdf";
-                    //使用ajax请求文件
-                    $.ajax(pdfUrl,{
-                        type:'get',
-                        timeout:10000,
-                        success:function () {
-                            window.open(pdfUrl);
-                        },
-                        error:function () {
-                            alert("没有相应文件,请上传!")
+                    //ajax重新获取编号名称
+                    $.ajax({
+                        url: "getLink", //请求路径
+                        type: "POST",
+                        data: {"dname":""+dname+""},//传递一个OBJECT
+                        dataType: "json",
+                        success: function (data) {
+                            var codeName = data.map(function (item) {
+                                return item.newcode;
+                            });
+                            //定义请求地址
+                            var pdfUrl = "PDF/"+codeName+".pdf";
+                            //使用ajax请求文件
+                            $.ajax(pdfUrl,{
+                                type:'get',
+                                timeout:10000,
+                                success:function () {
+                                    window.open(pdfUrl);
+                                },
+                                error:function () {
+                                    alert("没有相应文件,请上传!")
+                                }
+                            });
                         }
                     });
+
                 }
             }
         };
