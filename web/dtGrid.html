@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<!-- 以下为dtgrid引用	 -->
+	<!-- jQuery -->
+	<script type="text/javascript" src="dtGrid/dependents/jquery/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<script type="text/javascript" src="dtGrid/dependents/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="dtGrid/dependents/bootstrap/css/bootstrap.min.css" />
+
+	<!-- font-awesome -->
+	<link rel="stylesheet" type="text/css" href="dtGrid/dependents/fontAwesome/css/font-awesome.min.css" media="all" />
+
+	<!-- dtGrid -->
+	<script type="text/javascript" src="dtGrid/jquery.dtGrid.js"></script>
+	<script type="text/javascript" src="dtGrid/i18n/en.js"></script>
+	<link rel="stylesheet" type="text/css" href="dtGrid/jquery.dtGrid.css" />
+
+	<!-- datePicker -->
+	<script type="text/javascript" src="dtGrid/dependents/datePicker/WdatePicker.js" defer="defer"></script>
+	<link rel="stylesheet" type="text/css" href="dtGrid/dependents/datePicker/skin/WdatePicker.css" />
+	<link rel="stylesheet" type="text/css" href="dtGrid/dependents/datePicker/skin/default/datepicker.css" />
+</head>
+<body>
+<!-- 模糊查询start -->
+ <div style="margin-top:20px;">
+	<form class="form-horizontal" action="">
+		<div class="form-group">
+			<label class="col-sm-4 control-label text-right">模糊查询：</label>
+			<div class="col-sm-4">
+				<input type="text" id="like_user_code_or_user_name" name="like_user_code_or_user_name" class="form-control" />
+			</div>
+			<div class="col-sm-4">
+				<button type="button" class="btn btn-primary" id="custom_search_2_2_3" name="custom_search_2_2_3">
+					<i class="fa fa-search"></i>  自定义查询
+				</button>
+			</div>
+		</div>
+	</form>
+</div> 
+<!-- 模糊查询end -->
+<div id="gridContainer" class="dlshouwen-grid-container"></div>
+<div id="gridToolBarContainer" class="dt-grid-toolbar-container Azzan"></div>
+<div id="AzzanLog"></div>
+ 
+<script type="text/javascript">
+       //ajax请求
+       $.ajax({
+             type: "post",
+             url: "getJson",
+             data: {},
+             dataType: "json",
+             success: function(data){
+                 //定义表格
+                 //自己的配置
+                 var gridColumns = [
+                     {id:'source',title:'起点名称',type:'string',columnClass:'text-center'},
+                     {id:'target',title:'终点名称',type:'string',columnClass:'text-center'},
+                     {id:'type',title:'连线类型',type:'string',columnClass:'text-center'},
+                     {id:'operation', title:'操作', type:'string', columnClass:'text-center', resolution:function(value, record, column, grid, dataNo, columnNo){
+                             var content = '';
+                             content += '<button class="btn btn-xs btn-default" onclick="updateConfigure()"><i class="fa fa-edit"></i>  修改</button>';
+                             content += '  ';
+                             content += '<button class="btn btn-xs btn-danger" onclick="removeConfigure()"><i class="fa fa-trash-o"></i>  删除</button>';
+                             //content += '<button class="btn btn-xs btn-danger" onclick="alert(\'删除用户：'+record.user_name+'\');"><i class="fa fa-trash-o"></i>  删除</button>';
+                             return content;
+                         }}
+                 ];
+                 //使用本地数据
+                 // var datas = [{"configure":"样式表","createusers":"江疏影","sex":"女","address":"北京","year":"1991","date":'2014-01-01 19:06:52'},
+                 //              {"configure":"字体样式","createusers":"Azzan","sex":"男","address":"深圳","year":"2016","date":'2015-05-21 00:05:21'},
+                 //              {"configure":"字体大小","createusers":"范冰冰","sex":"女","address":"上海","year":"1988","date":'2016-05-07 12:06:06'},
+                 //              {"configure":"字体颜色","createusers":"赵丽颖","sex":"女","address":"河北","year":"1989","date":'2017-01-01 01:01:01'},
+                 //              {"configure":"div高","createusers":"江莱","sex":"女","address":"上海","year":"1990","date":'2017-02-27 13:29:55'},
+                 //              {"configure":"dataGrid","createusers":"孙红雷","sex":"男","address":"广州","year":"1992","date":'2018-08-09 14:30:00'}];
+
+                 //表选项
+                 var gridOption = {
+                     lang : 'zh-cn', //用于设置表格的语言，目前提供三种语言：英文、简体中文、繁体中文，默认为英文。
+                     ajaxLoad : false, //是否通过ajax的方式加载数据，如果设置为true，则将通过loadURL的地址获取数据，如果设置为false，则基础数据由datas属性传入。
+                     //loadURL : 'getJson', //ajax加载数据的地址，本属性只有在ajaxLoad参数设置为true时起作用。
+                     datas : data, //表格数据，数据格式为JSON数组。该参数仅在ajaxLoad参数设置为false时有效。
+                     exportFileName : '配置列表', //用于导出文件时的文件名，该文件名由option属性集中的exportFileName获得。
+                     check:true, //DT Grid提供复选功能，设置该属性为true则将会在所有列之前添加一个复选框的列，并在列标题提供全部选择、全部取消功能。该复选框可以使用getCheckedRecords方法来获取选中的内容。
+                     columns : gridColumns, //列对象定义，将上述定义列的JSON数组对象传递到此参数中。    见上：var gridColumns =
+                     gridContainer : 'gridContainer', //表格承载容器对象的id，设置完成后表格将显示在此容器中。 见上：第一个<div id="gridContainer"></div>
+                     toolbarContainer : 'gridToolBarContainer', //工具条承载容器对象的id，设置完成后表格的工具条将显示在此容器中。 见上：第二个<div id="gridToolBarContainer"></div>
+                     tools:'refresh|faseQuery|advanceQuery|export[excel,csv,pdf,txt]|print', //工具条可选内容，可选参数。默认：refresh|faseQuery|advanceQuery|export[excel,csv,pdf,txt]|print
+                     //exportURL:'C:\\Users\\Public\\Desktop', //导出文件的响应地址
+                     pageSize : 10, //每页显示条数。
+                     pageSizeLimit : [10, 30, 50], //每页显示条数的限制
+                     //showHeader:true, //是否显示列标题。不写默认 为true
+                     //单元格点击事件
+                     // onCellClick : function(value, record, column, grid, dataNo, columnNo, cell, row, extraCell, e){
+                     // var log = '<p>单元格事件触发。事件类型：'+e.type+'；触发单元格坐标：('+columnNo+','+dataNo+')；单元格内容：'+value+'。</p>';
+                     // appendAzzanLog(log);
+                     // }
+                 };
+                 var grid = $.fn.DtGrid.init(gridOption); //DtGrid的初始化
+             			console.log('读取到数据:'+data);
+                        grid.load();
+                      }
+         		});
+                //追加日志
+                function appendAzzanLog(log){
+                    if($('#AzzanLog p').length>=200){
+                        $('#AzzanLog p:last').remove();
+                    }
+                    $('#AzzanLog').prepend(log);
+                }
+
+                //修改操作
+                function updateConfigure(){
+                    alert("执行了updateConfigure操作。");
+                }
+
+                //删除操作
+                function removeConfigure(){
+                    alert("执行了removeConfigure操作。");
+                }
+</script>
+</body>
+</html>

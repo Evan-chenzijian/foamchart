@@ -53,6 +53,7 @@ d3.json(myURL, function(error,data) {
 
 // Per-type markers, as they don't inherit styles.
     svg.append("defs").selectAll("marker")
+        //suit 黑色实线无箭头;main 红色实线箭头; resolved 黑色虚线箭头;equal 橙色实线无箭头
         .data(["suit", "main", "resolved","equal"])
         .enter().append("marker")
         .attr("id", function(d) { return d; })
@@ -201,6 +202,7 @@ d3.json(myURL, function(error,data) {
                 return 0.2;
             }
         })
+
         // nodes.forEach(function(edge){
         //     if( edge.name === dName || (edge[dName] !== undefined &&  edge[dName].name === dName)){
         //         //其它节点亮度调低

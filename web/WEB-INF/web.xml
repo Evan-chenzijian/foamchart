@@ -63,4 +63,15 @@
         <servlet-name>getLink</servlet-name>
         <url-pattern>/getLink</url-pattern>
     </servlet-mapping>
+
+    <!--请求头过滤-->
+
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>filter.CorsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

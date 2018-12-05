@@ -19,6 +19,7 @@ public class getJson extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // 设置响应内容类型
         response.setContentType("text/json; charset=utf-8");
+        //解决跨域请求头的问题
         response.setHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = response.getWriter();
 
