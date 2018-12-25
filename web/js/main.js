@@ -2,7 +2,7 @@ var g = new dagreD3.graphlib.Graph()
     .setGraph({})
     .setDefaultEdgeLabel(function() { return {}; });
 // 获取网页数据
-$.getJSON('http://localhost:8080/MainJson',function(data){
+$.getJSON('MainJson',function(data){
     // console.log(data);
     //循环赋值
     for(var i = 0;i<data.length;i++){

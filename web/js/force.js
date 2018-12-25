@@ -1,5 +1,5 @@
 //定义读取json的URL
-var myURL = "http://localhost:8080/getJson";
+var myURL = "getJson";
 //直接读取网页上的数据
 d3.json(myURL, function(error,data) {
     if (error) throw error;

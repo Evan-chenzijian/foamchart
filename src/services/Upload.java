@@ -12,10 +12,11 @@ import java.io.IOException;
 //@WebServlet(name = "Upload")
 public class Upload extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("GBK");
+        request.setCharacterEncoding("UTF-8");
         String result = "未上传";
         //设置上传文件保存路径
         String filePath = getServletContext().getRealPath("/")+"PDF";
+//        String filePath = "d:/PDF";
         System.out.println(filePath);
         File pdfFile = new File(filePath);
         if (!pdfFile.exists()){

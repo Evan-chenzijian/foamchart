@@ -45,7 +45,11 @@
         fill: none;
         stroke: #ccc;
         stroke-width: 1.5px;
-    }</style>
+    }
+    /*遮罩层*/
+    #show{display: none;  position: absolute;  top: 35%;  left: 40%;  width: 20%;  height: 10%;
+        padding: 8px;  border: 8px solid #E8E9F7;  background-color: white;  z-index:1002;  overflow: auto;}
+</style>
 <body>
 <div class="container" style="margin-top: 10px">
     <div class="row">
@@ -57,6 +61,13 @@
     </div>
 </div>
 <hr>
+<div id="show">
+    已连接如下文件,请选择打开:
+    <select id="mySelector" onchange="openPDF(this)" style="width: 100px">
+        <option value="--请选择--">--请选择--</option>
+    </select>
+    <button onclick="closeShow()" type="button">关闭</button>
+</div>
 <div class="container">
     <div class="row">
         <P class="col-md-1 col-lg-1">图例说明:</P>
@@ -278,6 +289,11 @@
                 }
 
                 function dblclick(d) {
+                    document.getElementById("show").style.display ="block";
+                    //清空select选项
+                    $('#mySelector').empty();
+                    //再赋予一个默认的
+                    $('#mySelector').append("<option value=''>--请选择--</option>");
                     //获取节点名称
                     var dname = d.name;
                     //ajax重新获取编号名称
@@ -287,22 +303,26 @@
                         data: {"dname":""+dname+""},//传递一个OBJECT
                         dataType: "json",
                         success: function (data) {
+                            console.log(data);
+                            for(var i in data){
+                                $('#mySelector').append("<option value='"+data[i].newcode+"'>"+data[i].newcode+"</option>");
+                            }
                             var codeName = data.map(function (item) {
                                 return item.newcode;
                             });
-                            //定义请求地址
-                            var pdfUrl = "PDF/"+codeName+".pdf";
-                            //使用ajax请求文件
-                            $.ajax(pdfUrl,{
-                                type:'get',
-                                timeout:10000,
-                                success:function () {
-                                    window.open(pdfUrl);
-                                },
-                                error:function () {
-                                    alert("没有相应文件,请上传!")
-                                }
-                            });
+                            // //定义请求地址
+                            // var pdfUrl = "PDF/"+codeName+".pdf";
+                            // //使用ajax请求文件
+                            // $.ajax(pdfUrl,{
+                            //     type:'get',
+                            //     timeout:10000,
+                            //     success:function () {
+                            //         window.open(pdfUrl);
+                            //     },
+                            //     error:function () {
+                            //         alert("没有相应文件,请上传!")
+                            //     }
+                            // });
                         }
                     });
 
@@ -310,6 +330,44 @@
             }
         };
         $("#treeForm").ajaxSubmit(options);}
+
+        //遮罩层选择打开PDF文件
+    function openPDF(obj) {
+        //定义请求地址
+        var defPath = getRootPath_web();
+        console.log(defPath);
+        var pdfUrl = defPath+"/PDF/"+obj.value+".pdf";
+        var pdfJs = "js/PDFJS/web/viewer.html?file="+pdfUrl;
+        //使用ajax请求文件
+        $.ajax(pdfUrl,{
+            type:'get',
+            timeout:10000,
+            success:function () {
+                window.open(pdfJs);
+            },
+            error:function () {
+                alert("没有相应文件,请上传!")
+            }
+        });
+    }
+    //关闭遮罩层
+    function closeShow() {
+        document.getElementById("show").style.display ='none';
+    }
+
+    //获取当前根目录
+    function getRootPath_web() {
+        //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+        var curWwwPath = window.document.location.href;
+        //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        //获取主机地址，如： http://localhost:8083
+        var localhostPaht = curWwwPath.substring(0, pos);
+        //获取带"/"的项目名，如：/uimcardprj
+        var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+        return (localhostPaht + projectName);
+    }
 
     //修改按钮
     // $("#update").click(function () {

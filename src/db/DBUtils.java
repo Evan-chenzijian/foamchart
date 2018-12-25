@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public final class DBUtils {
     private static String url = "jdbc:mysql://localhost:3306/d3_data";
     private static String user = "root";
-    private static String psw = "ljj226400";
+    private static String psw = "9bYdaK";
 
     private static  Connection conn;
 
